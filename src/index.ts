@@ -1,5 +1,6 @@
 import express from 'express';
 import SerialPort from 'serialport';
+import path from 'path';
 
 const app = express();
 const port = 3000;
@@ -7,6 +8,12 @@ const port = 3000;
 const serialPort = new SerialPort('COM3', {
     baudRate: 9600,
     autoOpen: false
+});
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
+app.get('/', async (req, res) => {
+    res.sendFile(path.join(__dirname, 'static/index.html'))
 });
 
 app.post('/open', (req, res) => {
