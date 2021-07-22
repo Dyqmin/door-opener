@@ -20,11 +20,13 @@ app.post('/open', (req, res) => {
 
     serialPort.open((err) => {
         if (err) {
+            res.statusCode = 202;
             res.send('Port is busy!');
         }
         serialPort.write('OPEN', (err, bw) => {
             if (err) {
                 serialPort.close();
+                res.statusCode = 202;
                 res.send('Port write error');
             }
             serialPort.close();
