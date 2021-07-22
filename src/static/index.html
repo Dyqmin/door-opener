@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Otwieracz</title>
+    <style>
+        body {
+            margin: auto;
+        }
+
+        .container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        img:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    </div>
+
+    <script>
+        const IMG_CLOED_PATH = 'http://localhost:3000/images/closed.jpg';
+        const IMG_OPENED_PATH = 'http://localhost:3000/images/opened.jpg';
+
+        const container = document.querySelector('.container');
+        const img = document.createElement('img');
+        img.src = IMG_CLOED_PATH;
+        container.append(img);
+
+        let eventProcessing = false;
+
+        const openDoor = async () => {
+            const response = await fetch('http://localhost:3000/open', {
+                method: 'POST'
+            });
+            return response.status === 200;
+        };
+
+        const delay = async (time) => {
+            await new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve();
+                }, time);
+            });
+        };
+
+        const handleDoorOpen = () => new Promise(async (resolve) => {
+            eventProcessing = true;
+            if (await openDoor()) {
+                img.src = IMG_OPENED_PATH;
+                await delay(2000).then(_ => {
+                    img.src = IMG_CLOED_PATH;
+                    resolve();
+                })
+            } else {
+                const animation = img.animate([
+                    { marginLeft: '-5px' },
+                    { marginLeft: '5px' }
+                ], {
+                    duration: 200,
+                    iterations: 10
+                });
+                animation.onfinish = () => resolve();
+            }
+        });
+
+        const handleImgClick = async () => {
+            if (!eventProcessing) {
+                await handleDoorOpen().then(() => {
+                    eventProcessing = false;
+                });
+            }
+        };
+
+        img.addEventListener('click', handleImgClick);
+    </script>
+</body>
+</html>
