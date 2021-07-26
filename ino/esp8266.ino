@@ -1,10 +1,9 @@
 String incomingString = "";
-String text = "info: ";
-int ledPin = 12;
+int relaySignalPin = 12;
 
 void setup() {
   Serial.begin(9600);
-  pinMode(ledPin, OUTPUT);
+  pinMode(relaySignalPin, OUTPUT);
 }
 
 void loop() {
@@ -12,12 +11,11 @@ void loop() {
     incomingString = Serial.readString();
 
     if (incomingString.length() > 0) {
-      digitalWrite(ledPin, HIGH);
+      digitalWrite(relaySignalPin, HIGH);
       delay(1000);
-      digitalWrite(ledPin, LOW);
+      digitalWrite(relaySignalPin, LOW);
       delay(1000);
     }
   }
-  Serial.println(text);
   delay(200);
 }
