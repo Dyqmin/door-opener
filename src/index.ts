@@ -5,7 +5,7 @@ import path from 'path';
 const app = express();
 const port = 3000;
 
-const serialPort = new SerialPort('COM3', {
+const serialPort = new SerialPort('/dev', {
     baudRate: 9600,
     autoOpen: false
 });
@@ -36,7 +36,7 @@ app.post('/open', (req, res) => {
 
 });
 
-app.get('/get-paths', async (req, res) => {
+app.get('/paths', async (req, res) => {
     res.send(await SerialPort.list());
 });
 
