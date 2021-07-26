@@ -5,7 +5,7 @@ import path from 'path';
 const app = express();
 const port = 3000;
 
-const serialPort = new SerialPort('/dev', {
+const serialPort = new SerialPort('/dev/tty', {
     baudRate: 9600,
     autoOpen: false
 });
