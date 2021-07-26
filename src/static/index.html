@@ -28,8 +28,8 @@
     </div>
 
     <script>
-        const IMG_CLOED_PATH = 'http://localhost:3000/images/closed.jpg';
-        const IMG_OPENED_PATH = 'http://localhost:3000/images/opened.jpg';
+        const IMG_CLOED_PATH = '/images/closed.jpg';
+        const IMG_OPENED_PATH = '/images/opened.jpg';
 
         const container = document.querySelector('.container');
         const img = document.createElement('img');
@@ -39,7 +39,7 @@
         let eventProcessing = false;
 
         const openDoor = async () => {
-            const response = await fetch('http://localhost:3000/open', {
+            const response = await fetch('/open', {
                 method: 'POST'
             });
             return response.status === 200;
