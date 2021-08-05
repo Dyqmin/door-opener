@@ -9,6 +9,7 @@ by ourselves by every time doorbell rings.
 Express server is a message handler for our ESP8266 (or any MCU). 
 It receives a command to open digital pin, which is signal for a relay 
 to simulate a click. 
+Here is the video of working [demo](https://twitter.com/DvDomin/status/1419543709373304833).
 
 ## Install using Docker
 Build the image
